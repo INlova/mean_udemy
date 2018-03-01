@@ -5,6 +5,5 @@ See Udemy course's contents [here](https://udemy.com/the-complete-javascript-dev
 ### To run:
 
     Make sure node is installed.
-    npm init
-    npm install express --save
+    npm install
     node app.js
