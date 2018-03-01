@@ -1,0 +1,22 @@
+{
+  "name": "completed",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lena-1/completed.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lena-1/completed/issues"
+  },
+  "homepage": "https://github.com/lena-1/completed#readme",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}
