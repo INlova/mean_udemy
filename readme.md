@@ -1,5 +1,5 @@
 This is a Udemy tutorial on MEAN Stack.
-See Udemy course's contents via this [link](https://udemy.com/the-complete-javascript-developer-mean-stack-zero-to-hero/).
+See Udemy course's contents [here](https://udemy.com/the-complete-javascript-developer-mean-stack-zero-to-hero/).
 
 
 ### To run:
