@@ -4,6 +4,6 @@ See Udemy course's contents [here](https://udemy.com/the-complete-javascript-dev
 
 ### To run:
 
-    Make sure node is installed.
+    Make sure node and npm are installed.
     npm install
     node app.js
