@@ -2,21 +2,46 @@
 var hotelData = require('../data/hotel-data.json');
 
 
-//Defined 1st controller
+//1st controller
 module.exports.hotelsGetAll = function(req, res) {
-  console.log('-->GET the hotels');
+  console.log('--GET the hotels');
+  console.log(req.query);
+
+  var returnData;
+  var offset = 0;
+  var count = 5;
+
+  if (req.query && req.query.offset) {
+    offset = parseInt(req.query.offset, 10);
+  }
+  if (req.query && req.query.count) {
+    count = parseInt(req.query.count, 10);
+  }
+
+  returnData= hotelData.slice(offset, offset+count);
   res
     .status(200)
-    //.json({ "jsondata" : "GET received" });
-    .json(hotelData);
+    .json(returnData);
 };
 
-//Defined 2nd controller
+
+
+//2nd controller
 module.exports.hotelsGetOne = function(req, res) {
   var hotelId= req.params.hotelId;
   var thisHotel= hotelData[hotelId];
-  console.log('-->GET hotelId= ', hotelId);
+  console.log('--GET hotelId= ', hotelId);
   res
     .status(200)
     .json(thisHotel);
+};
+
+
+//3rd controller
+module.exports.hotelsAddOne = function(req, res) {
+  console.log("--POST new hotel");
+  console.log(req.body);
+  res
+    .status(200)
+    .json(req.body);
 };
