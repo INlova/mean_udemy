@@ -14,9 +14,10 @@ app.use(function(req,res,next){
 });
 
 
-//Use 'routes' as a middleware:
-var routes = require('./routes');
+//Use '/api/routes' as a middleware:
+var routes = require('./api/routes');
 app.use('/api', routes);
+
 
 //Set static directory= simplest middleware comes with express
 app.use(express.static(path.join(__dirname, 'public')));
