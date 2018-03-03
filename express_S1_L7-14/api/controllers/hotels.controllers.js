@@ -24,8 +24,6 @@ module.exports.hotelsGetAll = function(req, res) {
     .json(returnData);
 };
 
-
-
 //2nd controller
 module.exports.hotelsGetOne = function(req, res) {
   var hotelId= req.params.hotelId;

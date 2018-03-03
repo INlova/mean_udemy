@@ -1,0 +1,4 @@
+{
+  "ignore": ["express_S1_L7-14/public/*"],
+  "verbose": true
+}

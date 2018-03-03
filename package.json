@@ -2,8 +2,9 @@
   "name": "completed",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "express_S1_L7-14/app.js",
   "scripts": {
+    "start": "express_S1_L7-14/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
