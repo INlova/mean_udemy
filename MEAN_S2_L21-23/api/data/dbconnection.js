@@ -4,12 +4,12 @@ var dburl = 'mongodb://localhost:27017/meanhotel';
 var _connection = null;
 
 var open = function() {
-  MongoClient.connect(dburl, function(err, db) {
+  MongoClient.connect(dburl, function(err, database) {
     if (err) {
       console.log("DB connection failed");
       return;
     }
-    _connection = db;
+    _connection = database.db('meanhotel');
     console.log("DB connection open");
   });
 };
