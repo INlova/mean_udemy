@@ -2,9 +2,9 @@
   "name": "completed",
   "version": "1.0.0",
   "description": "",
-  "main": "express_S1_L7-14/app.js",
+  "main": "MEAN_S2_L21-23/app.js",
   "scripts": {
-    "start": "express_S1_L7-14/app.js",
+    "start": "MEAN_S2_L21-23/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
