@@ -1,1 +1,1 @@
-Section 2: Mongo DB
+Section 3: Mongoose and REST API
