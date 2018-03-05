@@ -1,11 +1,12 @@
-//get data from a mongoDB
-var dbconn = require('../data/dbconnection.js');
+// //get data from a mongoDB via native driver
+// var dbconn = require('../data/dbconnection.js');
+// //to search mongo doc by id
+// var ObjectId = require('mongodb').ObjectID;
+// //get data from json file in the app
+// var hotelData = require('../data/hotel-data.json');
 
-//to search mongo doc by id
-var ObjectId = require('mongodb').ObjectID;
+//get data from a mongoDB via mongoose driver
 
-//get data from json file in the app
-var hotelData = require('../data/hotel-data.json');
 
 
 
@@ -18,9 +19,15 @@ module.exports.hotelsGetAll = function(req, res) {
   console.log(req.query);
   
   
-  //Working with MongoDB data
-  var db = dbconn.get();  //console.log("db", db);
-  var collection = db.collection('hotels');
+  //Working with MongoDB data via Mongoose driver
+  var mongoose = require('mongoose');
+  var Hotel = mongoose.model('Hotel');
+  
+  
+  
+  // //Working with MongoDB data via native driver
+  // var db = dbconn.get();  //console.log("db", db);
+  // var collection = db.collection('hotels');
   
   // //returns ALL mongo docs
   // collection
@@ -45,16 +52,30 @@ module.exports.hotelsGetAll = function(req, res) {
   }
   
   
-  collection
-    .find()
-    .skip(offset)
-    .limit(count)
-    .toArray(function(err, docs) {
-      console.log("Found hotels", docs.length);
-      res
-        .status(200)
-        .json(docs);
-  }); //default=Found 5 hotels
+  //working with collection via Mongoose driver
+  Hotel
+  .find()
+  .skip(offset)
+  .limit(count) 
+  .exec(function(err, hotels) {
+    console.log("Found hotels", hotels.length);
+    res
+      .json(hotels);
+  });
+  
+  
+  
+  //working with collection via native driver
+  // collection
+  //   .find()
+  //   .skip(offset)
+  //   .limit(count)
+  //   .toArray(function(err, docs) {
+  //     console.log("Found hotels", docs.length);
+  //     res
+  //       .status(200)
+  //       .json(docs);
+  // }); //default=Found 5 hotels
   
 
   // //Working with JSON in the app. Return a subset of docs
@@ -68,8 +89,14 @@ module.exports.hotelsGetAll = function(req, res) {
 
 
 
+
+
+
+
+
+
 //2nd controller
-// //working with app's json
+// //--working with app's json
 // module.exports.hotelsGetOne = function(req, res) {
 //   var hotelId= req.params.hotelId;
 //   var thisHotel= hotelData[hotelId];
@@ -79,30 +106,50 @@ module.exports.hotelsGetAll = function(req, res) {
 //     .json(thisHotel);
 // };
 
-
-//working with mongoDB
+//--working with mongoDB
 module.exports.hotelsGetOne = function(req, res) {
-  var db = dbconn.get();
-  var collection = db.collection('hotels');
+  //via native driver:
+  // var db = dbconn.get();
+  // var collection = db.collection('hotels');
   var id = req.params.hotelId;
+  
+  
+  
+  //via Mongoose driver:
+  var mongoose = require('mongoose');
+  var Hotel = mongoose.model('Hotel');
+  
   
   console.log('--GET hotel id', id);
 
-  collection
-    .findOne({
-      _id : ObjectId(id)
-    }, function(err, doc) {
-      res
-        .status(200)
-        .json(doc);
+  //via native driver:
+  // collection
+  //   .findOne({
+  //     _id : ObjectId(id)
+  //   }, function(err, doc) {
+  //     res
+  //       .status(200)
+  //       .json(doc);
+  // });
+  
+  //via mongoose driver:
+  Hotel
+  .findById(id)
+  .exec(function(err, doc) {
+    res
+      .status(200)
+      .json(doc);
   });
+  
+  
+  
 };
 
 
 
 
 //3rd controller: 
-// //data grabbed from online form and shown in console
+// //--data grabbed from online form and shown in console
 // module.exports.hotelsAddOne = function(req, res) {
 //   console.log("--POST new hotel");
 //   console.log(req.body);
@@ -112,11 +159,12 @@ module.exports.hotelsGetOne = function(req, res) {
 // };
 
 
-//data saved in mongoDB
+//--data saved in mongoDB
 module.exports.hotelsAddOne = function(req, res) {
   console.log("--POST new hotel");
-  var db = dbconn.get();
-  var collection = db.collection('hotels');
+  //via native driver:
+  // var db = dbconn.get();
+  // var collection = db.collection('hotels');
   var newHotel;
 
   if (req.body && req.body.name && req.body.stars) {
