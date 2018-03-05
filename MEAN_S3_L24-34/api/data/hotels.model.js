@@ -1,6 +1,36 @@
 var mongoose = require('mongoose');
 
-//define a basic schema
+var reviewSchema = new mongoose.Schema({
+  name : {
+    type : String,
+    required : true
+  },
+  rating : {
+    type : Number,
+    required : true,
+    min : 0,
+    max : 5
+  },
+  review : {
+    type : String,
+    required : true
+  },
+  createdOn : {
+    type : Date,
+    "default" : Date.now
+  }
+});
+
+var roomSchema = new mongoose.Schema({
+  type : String,
+  number : Number,
+  description : String,
+  photos : [String],
+  price : Number
+});
+
+
+//parent schema
 var hotelSchema = new mongoose.Schema({
   name : {
     type : String,
@@ -13,11 +43,20 @@ var hotelSchema = new mongoose.Schema({
     default : 0
   },
   services : [String],
-  description: String,
-  photos: [String],
-  currency: String,
+  description : String,
+  photos : [String],
+  currency : String,
+  reviews : [reviewSchema],
+  rooms : [roomSchema],
+  location : {
+    address : String,
+    // Store coordinates longitude (East/West), latitude (North/South) order.
+    coordinates : {
+      type : [Number],
+      index : '2dsphere'
+    }
+  }
 });
 
-
-//copile schema into a model
+//compile schema into a model
 mongoose.model('Hotel', hotelSchema,'hotels');
