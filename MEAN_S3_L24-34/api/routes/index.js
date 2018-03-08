@@ -16,8 +16,8 @@ router
 router
   .route('/hotels/:hotelId')
   .get(ctrlHotels.hotelsGetOne)
-  .put(ctrlHotels.hotelsUpdateOne);//PUT that hotel via Mongoose
-
+  .put(ctrlHotels.hotelsUpdateOne)//PUT that hotel via Mongoose
+  .delete(ctrlHotels.hotelsDeleteOne);
 // //POST hotel via native driver
 // router
 //   .route('/hotels/new')
@@ -33,7 +33,8 @@ router
 router
   .route('/hotels/:hotelId/reviews/:reviewId')
   .get(ctrlReviews.reviewsGetOne)
-  .put(ctrlReviews.reviewsUpdateOne);
+  .put(ctrlReviews.reviewsUpdateOne)
+  .delete(ctrlReviews.reviewsDeleteOne);
 
 
 
