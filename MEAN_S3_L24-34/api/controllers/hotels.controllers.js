@@ -286,6 +286,19 @@ module.exports.hotelsGetOne = function(req, res) {
 
 
 
+//helper f(x) for 3rd controller
+var _splitArray = function(input) {
+  var output;
+  if (input && input.length > 0) {
+    output = input.split(";");
+  } else {
+    output = [];
+  }
+  return output;
+};
+
+
+
 //3rd controller:
 // //--data grabbed from online form and shown in console
 // module.exports.hotelsAddOne = function(req, res) {
@@ -299,26 +312,63 @@ module.exports.hotelsGetOne = function(req, res) {
 
 //--data saved in mongoDB
 module.exports.hotelsAddOne = function(req, res) {
-  console.log("--POST new hotel");
-  //via native driver:
-  // var db = dbconn.get();
-  // var collection = db.collection('hotels');
-  var newHotel;
 
-  if (req.body && req.body.name && req.body.stars) {
-    newHotel = req.body;
-    newHotel.stars = parseInt(req.body.stars, 10);
-    collection.insertOne(newHotel, function(err, response) {
-      //console.log("Hotel added", response);
-      console.log("Hotel added", response.ops);
-      res
-        .status(201)
-        .json(response.ops);
+  console.log("--POST new hotel");
+// //1. Via native driver:
+  // // var db = dbconn.get();
+  // // var collection = db.collection('hotels');
+  // var newHotel;
+  //
+  // if (req.body && req.body.name && req.body.stars) {
+  //   newHotel = req.body;
+  //   newHotel.stars = parseInt(req.body.stars, 10);
+  //   collection.insertOne(newHotel, function(err, response) {
+  //     //console.log("Hotel added", response);
+  //     console.log("Hotel added", response.ops);
+  //     res
+  //       .status(201)
+  //       .json(response.ops);
+  //   });
+  // } else {
+  //   console.log("Data missing from body");
+  //   res
+  //     .status(400)
+  //     .json({ message : "Required data missing from body" });
+  // }
+
+//2. Via Mongoose:
+  // Hotel
+  //   .create({
+  //     name : req.body.name
+  //   }, function(err, hotel) {
+  //       console.log("Hotel created!", hotel);
+  //       res
+  //         .status(201)
+  //         .json(hotel);
+  //     });
+  Hotel
+    .create({
+      name : req.body.name,
+      description : req.body.description,
+      stars : parseInt(req.body.stars,10),
+      services : _splitArray(req.body.services),
+      photos : _splitArray(req.body.photos),
+      currency : req.body.currency,
+      location : {
+        address : req.body.address,
+        coordinates : [parseFloat(req.body.lng), parseFloat(req.body.lat)]
+      }
+    }, function(err, hotel) {
+      if (err) {
+        console.log("Error creating hotel");
+        res
+          .status(400)
+          .json(err);
+      } else {
+        console.log("Hotel created!", hotel);
+        res
+          .status(201)
+          .json(hotel);
+      }
     });
-  } else {
-    console.log("Data missing from body");
-    res
-      .status(400)
-      .json({ message : "Required data missing from body" });
-  }
-};
+  };
