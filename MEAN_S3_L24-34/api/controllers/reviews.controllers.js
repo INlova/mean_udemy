@@ -41,6 +41,7 @@ module.exports.reviewsGetOne = function(req, res) {
 
 
 //push data into a review array
+//hotel is a model instance
 var _addReview = function (req, res, hotel) {
   hotel.reviews.push({
     name : req.body.name,
@@ -48,7 +49,7 @@ var _addReview = function (req, res, hotel) {
     review : req.body.review
   });
 
-  //hotel is a model instance.
+
   hotel.save(function(err, hotelUpdated) {
     if (err) {
       res
